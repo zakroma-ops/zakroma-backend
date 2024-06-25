@@ -3,7 +3,7 @@ image: monkpatch/zakroma_backend:v1.0.0
 host: zakroma.shop
 port: 443
 tls:
-  generate: true
+  generate: false
   secretName: zakroma-shop
   host: zakroma.shop
   name: le-cert-zakroma
