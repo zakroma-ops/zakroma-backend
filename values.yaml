@@ -1,0 +1,18 @@
+suffix: 'release'
+image: monkpatch/zakroma_backend:v1.0.0
+host: zakroma.shop
+port: 443
+tls:
+  generate: true
+  secretName: zakroma-shop
+  host: zakroma.shop
+  name: le-cert-zakroma
+  issuer:
+    kind: ClusterIssuer
+    name: le-issuer
+db:
+  host: localhost
+  port: 5432
+  name: zakroma
+  user: postgres
+  pass: postgres

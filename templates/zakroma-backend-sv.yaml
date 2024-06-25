@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: zakroma-backend-sv-{{ .Values.suffix }}
+spec:
+  selector:
+    app: zakroma-backend-{{ .Values.suffix }}
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

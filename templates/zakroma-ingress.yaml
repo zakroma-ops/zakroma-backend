@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: zakroma-ingress-{{ .Values.suffix }}
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: '{{ .Release.Namespace }}-zakroma-stripprefix-{{ .Values.suffix }}@kubernetescrd'
+spec:
+  tls:
+    - secretName: '{{ .Values.tls.secretName }}-{{ .Values.suffix }}'
+  rules:
+    - host: '{{ .Values.tls.host }}'
+      http:
+        paths:
+          - path: /{{ .Values.suffix }}/
+            pathType: Prefix
+            backend:
+              service:
+                name: zakroma-backend-sv-{{ .Values.suffix }}
+                port:
+                  number: 8080

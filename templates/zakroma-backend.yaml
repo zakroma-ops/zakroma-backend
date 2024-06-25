@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zakroma-backend-{{ .Values.suffix }}
+  labels:
+    app: zakroma-backend-{{ .Values.suffix }}
+spec:
+  selector:
+    matchLabels:
+      app: zakroma-backend-{{ .Values.suffix }}
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: zakroma-backend-{{ .Values.suffix }}
+    spec:
+      containers:
+        - name: zakroma-backend
+          image: '{{ .Values.image }}'
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 100m
+              memory: 100Mi
+          # livenessProbe:
+          #   tcpSocket:
+          #     port: 80
+          #   initialDelaySeconds: 5
+          #   timeoutSeconds: 5
+          #   successThreshold: 1
+          #   failureThreshold: 3
+          #   periodSeconds: 10
+          # readinessProbe:
+          #   httpGet:
+          #     path: /_status/healthz
+          #     port: 80
+          #   initialDelaySeconds: 5
+          #   timeoutSeconds: 2
+          #   successThreshold: 1
+          #   failureThreshold: 3
+          #   periodSeconds: 10
+          env:
+            - name: SERVER_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: zakroma-backend-cm-{{ .Values.suffix }}
+                  key: srv_host
+            - name: SERVER_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: zakroma-backend-cm-{{ .Values.suffix }}
+                  key: srv_port
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: zakroma-backend-cm-{{ .Values.suffix }}
+                  key: db_host
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: zakroma-backend-cm-{{ .Values.suffix }}
+                  key: db_user
+            - name: DB_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: zakroma-backend-cm-{{ .Values.suffix }}
+                  key: db_pass
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: zakroma-backend-cm-{{ .Values.suffix }}
+                  key: db_name
+          ports:
+            - containerPort: 8080
+              name: zakroma-backend
+          volumeMounts:
+            - name: localtime
+              mountPath: /etc/localtime
+      volumes:
+        - name: localtime
+          hostPath:
+            path: /usr/share/zoneinfo/Europe/Moscow
+      restartPolicy: Always
+---
+
