@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: zakroma-backend
-          image: '{{ .Values.image }}'
+          image: '{{ .Values.image }}:{{ .Values.tag }}'
           imagePullPolicy: Always
           resources:
             requests:

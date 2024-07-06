@@ -1,5 +1,6 @@
 suffix: 'release'
-image: monkpatch/zakroma_backend:v1.0.0
+image: monkpatch/zakroma_backend
+tag: v1.0.0
 host: zakroma.shop
 port: 443
 tls:
