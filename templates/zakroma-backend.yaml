@@ -80,6 +80,8 @@ spec:
                 configMapKeyRef:
                   name: zakroma-backend-cm-{{ .Values.suffix }}
                   key: db_name
+            - name: DOCKER_TAG
+              value: '{{ .Values.suffix }}'
           ports:
             - containerPort: 8080
               name: zakroma-backend
