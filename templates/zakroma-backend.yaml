@@ -5,7 +5,7 @@ metadata:
   labels:
     app: zakroma-backend-{{ .Values.suffix }}
   annotations:
-    keel.sh/policy: all
+    keel.sh/policy: force
 spec:
   selector:
     matchLabels:
