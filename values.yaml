@@ -12,7 +12,7 @@ tls:
     kind: ClusterIssuer
     name: le-issuer
 db:
-  host: localhost
+  host: postgres-postgresql
   port: 5432
   name: zakroma
   user: postgres
